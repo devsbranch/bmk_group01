@@ -43,13 +43,13 @@ def user_input():  # Will process user inputs entered bu user from command line
             continue
 
         elif user_choice == 'U':
-            bmk_to_updt = "What is the name of your bookmark you want to update?   "
-            values_to_updt = f"""What do you want to update to {bmk_to_updt}? Select option
+            bmk_to_updt = input('What is the name of your bookmark you want to update?   ')
+            values_to_updt = input(f"""What do you want to update to {bmk_to_updt}? Select option
                                 1. Everything
                                 2. change the bookmark name
                                 3. change the bookmark url
                                 4. change the bookmark description
-                                """
+                                """)
             while True:
                 if values_to_updt == '1':
                     bmk_name = input("Enter a name for your Bookmark:  ")
@@ -65,13 +65,13 @@ def user_input():  # Will process user inputs entered bu user from command line
                     break
                 elif values_to_updt == '3':
                     bmk_url = input("Enter a url for your Bookmark:  ")
-                    database.update_bookmark('2', bmk_to_updt, '', bmk_url, '')
+                    database.update_bookmark('3', bmk_to_updt, '', bmk_url, '')
                     print('bookmark updated')
                     break
 
                 elif values_to_updt == '4':
                     bmk_desc = input("Enter a description for your Bookmark:  ")
-                    database.update_bookmark('2', bmk_to_updt, '', '', bmk_desc)
+                    database.update_bookmark('4', bmk_to_updt, '', '', bmk_desc)
                     print('bookmark updated')
                     break
                 elif values_to_updt not in ['1', '2', '3', '4']:
