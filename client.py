@@ -37,14 +37,14 @@ def user_input():  # Will process user inputs entered bu user from command line
             print("bookmark added")
             continue
 
-        elif user_choice == 'R':
+        elif user_choice == user_menu().get('R', None):
             bookmarks = database.show_bookmarks()
             for i in bookmarks:
                 print(i[0], i[1], i[2])
             print("Process finished")
             continue
 
-        elif user_choice == 'U':
+        elif user_choice == user_menu().get('U', None):
             bmk_to_updt = input('What is the name of your bookmark you want to update?   ')
             values_to_updt = input(f"""What do you want to update to {bmk_to_updt}? Select option
                                 1. Everything
@@ -81,7 +81,7 @@ def user_input():  # Will process user inputs entered bu user from command line
                     break
             database.save_changes()
             continue
-        elif user_choice == 'D':
+        elif user_choice == user_menu().get('D', None):
             bmk_name = input("Enter a name for your Bookmark you want to delete:  ")
             database.delete_bookmark(bmk_name)
             database.save_changes()
