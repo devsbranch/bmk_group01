@@ -6,13 +6,11 @@ def user_menu():  # Presents the user with options available for selection
         'A': 'Create new bookmark',
         'R': 'Read bookmark (s)',
         'U': 'Update existing bookmark',
-        'D': 'Delete existing bookmark',
-        'Q': 'Exit program'
+        'D': 'Delete existing bookmark'
     }
     print('\nPlease select an option amongst the letters on the left')
     for action, descr in user_options.items():
         print(f'{action} : {descr}')
-    return user_options
 
 
 def user_input():  # Will process user inputs entered bu user from command line
@@ -21,14 +19,14 @@ def user_input():  # Will process user inputs entered bu user from command line
         user_menu()  # Will show available options
         user_choice = input('Please select a letter option from the menu above: ')
 
-        if user_choice not in user_menu().keys():
+        if user_choice not in ['A', 'R', 'U', 'D']:
             print("INVALID OPTION SELECTED")
             continue
             # If user enters option other than which is available, user will e shown "INVALID OPTION SELECTED".
             # The continue statement makes it possible to go back to the beginning of the loop and prompt user to enter
             # the correct option
 
-        elif user_choice == user_menu().get('A', None):
+        elif user_choice == 'A':
             bmk_name = input("Enter a name for your Bookmark:  ")
             bmk_url = input("Enter url for your Bookmark:  ")
             bmk_desc = input("Enter description for your Bookmark:  ")
@@ -37,14 +35,14 @@ def user_input():  # Will process user inputs entered bu user from command line
             print("bookmark added")
             continue
 
-        elif user_choice == user_menu().get('R', None):
+        elif user_choice == 'R':
             bookmarks = database.show_bookmarks()
             for i in bookmarks:
                 print(i[0], i[1], i[2])
             print("Process finished")
             continue
 
-        elif user_choice == user_menu().get('U', None):
+        elif user_choice == 'U':
             bmk_to_updt = input('What is the name of your bookmark you want to update?   ')
             values_to_updt = input(f"""What do you want to update to {bmk_to_updt}? Select option
                                 1. Everything
@@ -81,7 +79,7 @@ def user_input():  # Will process user inputs entered bu user from command line
                     break
             database.save_changes()
             continue
-        elif user_choice == user_menu().get('D', None):
+        elif user_choice == 'D':
             bmk_name = input("Enter a name for your Bookmark you want to delete:  ")
             database.delete_bookmark(bmk_name)
             database.save_changes()
@@ -90,3 +88,4 @@ def user_input():  # Will process user inputs entered bu user from command line
 
 
 user_input()
+

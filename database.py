@@ -14,7 +14,7 @@ def add_bookmark(bmk_name, bmk_url, bmk_desc):
 
 
 def show_bookmarks():
-    return c.execute("""SELECT * FROM bookmarks""")
+    return c.execute("""SELECT * FROM bookmarks""")  # the #function runs only if the user selects option R
 
 
 def update_bookmark(opt, bmk_to_updt, bmk_name, bmk_url,
@@ -34,6 +34,8 @@ def update_bookmark(opt, bmk_to_updt, bmk_name, bmk_url,
 
 
 def delete_bookmark(bmk_name):
+    """Function returns changes that a user  enters."""
+
     bookmarks = c.execute(f"""DELETE FROM bookmarks WHERE bookmark_name = '{bmk_name}'""")
     return bookmarks
 
