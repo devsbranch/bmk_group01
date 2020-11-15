@@ -83,7 +83,7 @@ def delete_bookmark(bmk_name):
     return bookmarks
 
 
-def save_changes():
+def save_changes():  # this function will be called in the client.py module to save changes made to the database.
     conn.commit()
     print("changes saved")
 
