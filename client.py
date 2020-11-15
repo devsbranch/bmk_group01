@@ -1,4 +1,10 @@
 import database
+from datetime import datetime
+from datetime import date
+
+now = datetime.now()
+time_updated = now.strftime("%H:%M:%S")
+date_updated = date.today()
 
 
 def user_menu():
@@ -10,7 +16,8 @@ def user_menu():
         'A': 'Create new bookmark',
         'R': 'Read bookmark (s)',
         'U': 'Update existing bookmark',
-        'D': 'Delete existing bookmark'
+        'D': 'Delete existing bookmark',
+        'Q': 'Quit program'
     }
     print('\nPlease select an option amongst the letters on the left')
     for action, descr in user_options.items():
@@ -26,13 +33,7 @@ def user_input():
         user_menu()
         user_choice = input('Please select a letter option from the menu above: ')
 
-        if user_choice not in ['A', 'R', 'U', 'D']:
-            print("INVALID OPTION SELECTED")
-            continue
-            # The continue statement makes it possible to go back to the beginning of the loop and prompt user to enter
-            # the correct option
-
-        elif user_choice == 'A':
+        if user_choice == 'A':
             """Within this function there are three more parameters,
             that is bmk_name, bmk_url,bmk_desc that will allow the user to enter their input.
             """
@@ -52,7 +53,8 @@ def user_input():
             """
             bookmarks = database.show_bookmarks()
             for i in bookmarks:
-                print(i[0], i[1], i[2])
+                print(
+                    f"bookmark name > {i[0]},  bookmark url > {i[1]},  bookmark description > {i[2]}, date added > {i[3]},  time > {i[4]}")
             print("Process finished")
             continue
 
@@ -68,28 +70,30 @@ def user_input():
                                 3. change the bookmark url
                                 4. change the bookmark description
                                 """)
-            while True:
+            while True:  # the loop will keep running the code inside until the user selects a valid option
+                # then the loop will break
+
                 if values_to_updt == '1':
                     bmk_name = input("Enter a name for your Bookmark:  ")
                     bmk_url = input("Enter url for your Bookmark:  ")
                     bmk_desc = input("Enter description for your Bookmark")
-                    database.update_bookmark('1', bmk_to_updt, bmk_name, bmk_url, bmk_desc)
+                    database.update_bookmark('1', bmk_to_updt, bmk_name, bmk_url, bmk_desc, date_updated, time_updated)
                     print('bookmark updated')
                     break
                 elif values_to_updt == '2':
                     bmk_name = input("Enter a name for your Bookmark:  ")
-                    database.update_bookmark('2', bmk_to_updt, bmk_name, '', '')
+                    database.update_bookmark('2', bmk_to_updt, bmk_name, '', '', date_updated, time_updated)
                     print('bookmark updated')
                     break
                 elif values_to_updt == '3':
                     bmk_url = input("Enter a url for your Bookmark:  ")
-                    database.update_bookmark('3', bmk_to_updt, '', bmk_url, '')
+                    database.update_bookmark('3', bmk_to_updt, '', bmk_url, '', date_updated, time_updated)
                     print('bookmark updated')
                     break
 
                 elif values_to_updt == '4':
                     bmk_desc = input("Enter a description for your Bookmark:  ")
-                    database.update_bookmark('4', bmk_to_updt, '', '', bmk_desc)
+                    database.update_bookmark('4', bmk_to_updt, '', '', bmk_desc, date_updated, time_updated)
                     print('bookmark updated')
                     break
                 elif values_to_updt not in ['1', '2', '3', '4']:
@@ -97,6 +101,7 @@ def user_input():
                     break
             database.save_changes()
             continue
+
         elif user_choice == 'D':
             """This parameter allows the user to delete the bookmark they no longer want."""
 
@@ -105,6 +110,16 @@ def user_input():
             database.save_changes()
             print("Bookmark deleted")
             continue
+
+        elif user_choice == 'Q':  # The program will exit the loop.
+            print("Program stopped")
+            break
+
+        else:
+            print("INVALID OPTION SELECTED")
+            continue
+    database.db_conn_close()  # the function will run when the while loop is exited since the user selects option Q.
+    # then function will close the connection to the database.
 
 
 user_input()
